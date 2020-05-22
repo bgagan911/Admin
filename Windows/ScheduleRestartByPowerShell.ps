@@ -1,9 +1,16 @@
-#	----------------------------------------------------------------------
+#
+#
+#	The script is used to set TimeZone to EST and Schedule system restart On Sunday at 3AM
+#
+#
+
+#	----------------------------------------------------------------------------------------------------------------------------------
 # Set TimeZone to Eastern
 # 
+
 Set-TimeZone -Id "Eastern Standard Time"
 
-#	----------------------------------------------------------------------
+#	----------------------------------------------------------------------------------------------------------------------------------
 #	A scheduled task action represents a command that a task executes when Task Scheduler runs the task. 
 #	You can use a task action definition to register a new scheduled task or update an existing task registration.
 #	A task can have a single action or a maximum of 32 actions. 
@@ -14,7 +21,7 @@ Set-TimeZone -Id "Eastern Standard Time"
 
 $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-NoProfile -WindowStyle Hidden -command "& {Restart-Computer -Force -wait}"'
 
-#	----------------------------------------------------------------------
+#	----------------------------------------------------------------------------------------------------------------------------------
 #	 You can use a time-based trigger or an event-based trigger to start a task. 
 #	Time-based triggers include starting a task at a specific time or starting a task multiple times on a daily or weekly schedule. 
 #
@@ -22,7 +29,7 @@ $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-NoProfil
 
 $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday 6 -At 3am
 
-#	----------------------------------------------------------------------
+#	----------------------------------------------------------------------------------------------------------------------------------
 #	Use a scheduled task principal to run a task under the security context of a specified account.
 #	When you use a scheduled task principal, Task Scheduler can run the task regardless of whether that account is logged on.
 #
@@ -30,7 +37,7 @@ $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday 6 -At 3am
 
 $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
 
-#	----------------------------------------------------------------------
+#	----------------------------------------------------------------------------------------------------------------------------------
 #	The New-ScheduledTaskSettingsSet cmdlet creates an object that contains scheduled task settings. 
 #	Each scheduled task has one set of task settings.
 #		Use this cmdlet to configure options to manage the behavior of the task upon completion, 
@@ -41,7 +48,7 @@ $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType
 
 $settings = New-ScheduledTaskSettingsSet -MultipleInstances Parallel
 
-#	----------------------------------------------------------------------
+#	----------------------------------------------------------------------------------------------------------------------------------
 #	Registers a scheduled task definition on a local computer.
 #
 #	https://docs.microsoft.com/en-us/powershell/module/scheduledtasks/register-scheduledtask?view=win10-ps
