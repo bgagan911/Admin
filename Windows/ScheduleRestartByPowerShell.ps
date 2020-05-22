@@ -10,6 +10,13 @@
 
 Set-TimeZone -Id "Eastern Standard Time"
 
+Write-Host -BackgroundColor Black -ForegroundColor Green "---------------------------------------------------------------"
+Write-Host -BackgroundColor Black -ForegroundColor Green "---------------------Time Zone set to EST---------------------"
+Write-Host -BackgroundColor Black -ForegroundColor Green "---------------------------------------------------------------"
+
+W32tm /resync /force
+Restart-Service w32time
+
 #	----------------------------------------------------------------------------------------------------------------------------------
 #	A scheduled task action represents a command that a task executes when Task Scheduler runs the task. 
 #	You can use a task action definition to register a new scheduled task or update an existing task registration.
@@ -27,7 +34,7 @@ $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-NoProfil
 #
 #	https://docs.microsoft.com/en-us/powershell/module/scheduledtasks/new-scheduledtasktrigger?view=win10-ps
 
-$trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday 6 -At 3am
+$trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At 3am
 
 #	----------------------------------------------------------------------------------------------------------------------------------
 #	Use a scheduled task principal to run a task under the security context of a specified account.
@@ -53,4 +60,4 @@ $settings = New-ScheduledTaskSettingsSet -MultipleInstances Parallel
 #
 #	https://docs.microsoft.com/en-us/powershell/module/scheduledtasks/register-scheduledtask?view=win10-ps
 
-Register-ScheduledTask -TaskName "YourTaskName" -Action $action -Trigger $trigger -Settings $settings -Principal $principal
+Register-ScheduledTask -TaskName "Auto Restart @ 3AM EST -- Logan" -Action $action -Trigger $trigger -Settings $settings -Principal $principal -TaskPath "\Logan"
