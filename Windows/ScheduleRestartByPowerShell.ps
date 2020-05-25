@@ -4,6 +4,9 @@
 #
 #
 
+# Delete Task, if already scheduled.  
+Unregister-ScheduledTask -TaskName "Auto Restart @ 3AM EST -- Logan" -Confirm:$false
+
 #	----------------------------------------------------------------------------------------------------------------------------------
 # Set TimeZone to Eastern
 # 
@@ -27,7 +30,7 @@ Restart-Service w32time
 #
 #	https://docs.microsoft.com/en-us/powershell/module/scheduledtasks/new-scheduledtaskaction?view=win10-ps
 
-$action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-NoProfile -WindowStyle Hidden -command "& {Restart-Computer -Force -wait}"'
+$action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-NoProfile -WindowStyle Hidden -command "& {Restart-Computer -Force}"'
 
 #	----------------------------------------------------------------------------------------------------------------------------------
 #	 You can use a time-based trigger or an event-based trigger to start a task. 
