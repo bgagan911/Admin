@@ -1,0 +1,8 @@
+# Get RDP Logout Session Timeout
+Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name 'MaxDisconnectionTime'
+
+# Timout 5 minutes
+Set-ItemProperty  -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name 'MaxDisconnectionTime' -Value 300000 
+
+# Timout 10 minutes
+Set-ItemProperty  -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name 'MaxDisconnectionTime' -Value 600000
